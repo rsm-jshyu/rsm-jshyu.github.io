@@ -19,25 +19,24 @@ format:
 
 ## Current
 
- - SVP, Analytics | GBK Collective
- - Lecturer, Econometrics | UCLA Anderson
- - Lecturer, Customer Analytics | UCSD Rady
+ - Capstone Project | Experian
+ - Graduate Teaching Assistant, MGT 172 Business Project Management | UCSD Rady
+
 
 -----
 
-## Work History
+## Experience
 
  - LPL Financial [| June 2024 - August 2024]{.gray}
+
 
 
 -----
 
 ## Education
 
- - PhD Quant. Marketing [| UCLA Anderson 2020]{.gray}
- - MBA Management [| UCLA Anderson 2014]{.gray}
- - CFA Charterholder (inactive) [| CFA Institute 2012]{.gray}
- - BA Economics & Mathematics [| CMC 2006]{.gray}
+ - MS Business Analytics [| UCSD 2024-Present]{.gray}
+ - BS Mathematics & Economics [| UCSD 2021-2024]{.gray}
 
 :::
 
