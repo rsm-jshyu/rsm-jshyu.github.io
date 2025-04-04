@@ -1,0 +1,74 @@
+---
+title: "Jenny Shyu"
+image: "images/jennylinkedinphoto.jpeg"
+about: 
+    template: jolla
+    links:
+        - icon: envelope
+          href: mailto:jshyu@ucsd.edu
+        - icon: linkedin
+          href: http://www.linkedin.com/in/jenny-shyu
+
+
+format:
+  html:
+    page-layout: full
+---
+
+:::{#main-content}
+
+## Current
+
+ - SVP, Analytics | GBK Collective
+ - Lecturer, Econometrics | UCLA Anderson
+ - Lecturer, Customer Analytics | UCSD Rady
+
+-----
+
+## Work History
+
+ - LPL Financial [| June 2024 - August 2024]{.gray}
+
+
+-----
+
+## Education
+
+ - PhD Quant. Marketing [| UCLA Anderson 2020]{.gray}
+ - MBA Management [| UCLA Anderson 2014]{.gray}
+ - CFA Charterholder (inactive) [| CFA Institute 2012]{.gray}
+ - BA Economics & Mathematics [| CMC 2006]{.gray}
+
+:::
+
+
+
+
+<!-- ## About Me
+
+Hi there! I'm **Jenny Shyu**, a Master’s student in Business Analytics at UC San Diego's Rady School of Management with a background in Math-Econ.
+
+### Why Business Analytics?
+
+I’m passionate about leveraging quantitative methods, data, and technology to generate meaningful insights and tackle real-world business problems.
+
+### What have I been working on?
+
+Most recently, I interned at **LPL Financial**, where I worked with financial data and dashboards. I also served as the **VP of Data Analytics** in a student consulting organization and currently work as a **Graduate Teaching Assistant** for a Business Project Management course—helping students apply frameworks like prioritization matrices in real-world project planning.
+
+In the past, I also trained and competed as a figure skater representing Chinese Taipei. -->
+
+<!-- ### Outside of Work...
+
+When I'm not working with data, I love:
+
+- Skating (still!),
+
+- Exploring new places,
+
+- Managing my foodie Instagram,
+
+- Traveling -->
+
+
+

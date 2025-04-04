@@ -1,0 +1,6 @@
+---
+title: "Resume"
+---
+
+{{< pdf resume/JennyShyu_Resume_SpringCareer.pdf width=100% height=800 >}}
+
