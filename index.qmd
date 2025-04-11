@@ -19,26 +19,27 @@ format:
 
 <div style="text-align: left;">
 
-## Current
-
-- Capstone Project | Experian
-- Graduate Teaching Assistant, MGT 172 Business Project Management | UCSD Rady
-
 
 -----
-
-## Experience
-
- - LPL Financial | June 2024 - August 2024 
-
-
+Hi there! I'm **Jenny Shyu**, I’m passionate about leveraging quantitative methods, data, and technology to generate meaningful insights and tackle real-world business problems.
 
 -----
 
 ## Education
 
- - M.S. Business Analytics [| UCSD 2024-Present]{.gray}
- - B.S. Mathematics & Economics, Computational Social Science Minor [| UCSD 2021-2024]{.gray}
+ - **M.S. Business Analytics** [| UCSD 2024-Present]{.gray}
+ - **B.S. Mathematics & Economics**, Computational Social Science Minor [| UCSD 2021-2024]{.gray}
+
+ 
+
+-----
+
+## Experience
+- **Experian** | Capstone Project | March 2025 - Present
+- **UCSD Rady** | Graduate Teaching Assistant | MGT 172 Business Project Management | October 2024 - Present
+- **LPL Financial** | Technology Intern | June 2024 - August 2024 
+- **Lumnus Consulting** | VP Data Analytics | November 2022 - June 2024
+ 
 
 
 </div>
