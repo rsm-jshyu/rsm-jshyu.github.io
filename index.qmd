@@ -17,17 +17,19 @@ format:
 
 :::{#main-content}
 
+<div style="text-align: left;">
+
 ## Current
 
- - Capstone Project | Experian
- - Graduate Teaching Assistant, MGT 172 Business Project Management | UCSD Rady
+- Capstone Project | Experian
+- Graduate Teaching Assistant, MGT 172 Business Project Management | UCSD Rady
 
 
 -----
 
 ## Experience
 
- - LPL Financial [| June 2024 - August 2024]{.gray}
+ - LPL Financial | June 2024 - August 2024 
 
 
 
@@ -35,11 +37,11 @@ format:
 
 ## Education
 
- - MS Business Analytics [| UCSD 2024-Present]{.gray}
- - BS Mathematics & Economics [| UCSD 2021-2024]{.gray}
+ - M.S. Business Analytics [| UCSD 2024-Present]{.gray}
+ - B.S. Mathematics & Economics, Computational Social Science Minor [| UCSD 2021-2024]{.gray}
 
-:::
 
+</div>
 
 
 
