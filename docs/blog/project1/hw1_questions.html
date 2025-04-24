@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
-<div id="4020ed5c" class="cell" data-execution_count="1">
+<div id="f341d6a3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_stata(<span class="st">"karlan_list_2007.dta"</span>)</span>
@@ -383,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="9404e7ee" class="cell" data-execution_count="2">
+<div id="1977654c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -852,11 +852,9 @@ Variable Definitions
 </section>
 <section id="balance-test" class="level3">
 <h3 class="anchored" data-anchor-id="balance-test">Balance Test</h3>
-<p>As an ad hoc test of the randomization mechanism, I provide a series of tests that compare aspects of the treatment and control groups to assess whether they are statistically significantly different from one another.</p>
-<p><em>todo: test a few variables other than the key outcome variables (for example, test months since last donation) to see if the treatment and control groups are statistically significantly different at the 95% confidence level. Do each as a t-test and separately as a linear regression, and confirm you get the exact same results from both methods. When doing a t-test, use the formula in the class slides. When doing the linear regression, regress for example mrm2 on treatment and look at the estimated coefficient on the treatment variable. It might be helpful to compare parts of your analysis to Table 1 in the paper. Be sure to comment on your results (hint: why is Table 1 included in the paper).</em></p>
 <p>As an ad hoc test of the randomization mechanism, I compare aspects of the treatment and control groups to assess whether they are statistically significantly different from one another at the 95% confidence level. If randomization was properly executed, we should expect no statistically significant differences in pre-treatment characteristics between the groups.</p>
 <p>I begin by testing the variable mrm2, which captures the number of months since the last donation. This variable is useful for checking balance because it is unrelated to the treatment assignment and reflects donor history.</p>
-<div id="6af6d66e" class="cell" data-execution_count="3">
+<div id="227dcd8d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
@@ -948,10 +946,7 @@ Variable Definitions
 </div>
 <p>The table of results above shows no statistically significant differences at the 5% level for any variable (p-values &gt; 0.05), though amount is marginally close (p ≈ 0.06 in the regression). This is consistent with proper random assignment.</p>
 <p>These checks are similar to what Karlan and List report in Table 1 of the original paper, which reassures readers that the treatment effect estimates later in the paper can be interpreted as causal. If pre-treatment covariates are balanced, then observed differences in outcomes are more likely attributable to the randomized treatment itself.</p>
-<section id="interpretation" class="level4">
-<h4 class="anchored" data-anchor-id="interpretation">Interpretation</h4>
 <p>These results mirror those presented in Table 1 of Karlan and List (2007), which shows no significant differences between the groups in prior donation behavior and demographic characteristics. Table 1 serves to reassure the reader that any observed treatment effects later in the analysis can be confidently attributed to the randomized intervention rather than pre-existing differences between groups.</p>
-</section>
 </section>
 </section>
 <section id="experimental-results" class="level2">
@@ -959,12 +954,9 @@ Variable Definitions
 <section id="charitable-contribution-made" class="level3">
 <h3 class="anchored" data-anchor-id="charitable-contribution-made">Charitable Contribution Made</h3>
 <p>First, I analyze whether matched donations lead to an increased response rate of making a donation.</p>
-<p><em>todo: make a barplot with two bars. Each bar is the proportion of people who donated. One bar for treatment and one bar for control.</em></p>
-<p><em>todo: run a t-test between the treatment and control groups on the binary outcome of whether any charitable donation was made. Also run a bivariate linear regression that demonstrates the same finding. (It may help to confirm your calculations match Table 2a Panel A.) Report your statistical results and interpret them in the context of the experiment (e.g., if you found a difference with a small p-value or that was statistically significant at some threshold, what have you learned about human behavior? Use mostly English words, not numbers or stats, to explain your finding.)</em></p>
-<p><em>todo: run a probit regression where the outcome variable is whether any charitable donation was made and the explanatory variable is assignment to treatment or control. Confirm that your results replicate Table 3 column 1 in the paper.</em></p>
 <section id="donation-rate-by-group" class="level4">
 <h4 class="anchored" data-anchor-id="donation-rate-by-group">Donation Rate by Group</h4>
-<div id="a32c6c1a" class="cell" data-execution_count="4">
+<div id="8ef449c9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1000,7 +992,7 @@ Variable Definitions
 </section>
 <section id="t-test-and-linear-regression" class="level4">
 <h4 class="anchored" data-anchor-id="t-test-and-linear-regression">T-Test and Linear Regression</h4>
-<div id="ba89aec6" class="cell" data-execution_count="5">
+<div id="866594cd" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>treat_gave <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'gave'</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>control_gave <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">'gave'</span>]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>t_stat, t_pval <span class="op">=</span> stats.ttest_ind(treat_gave, control_gave, equal_var<span class="op">=</span><span class="va">False</span>)</span>
@@ -1034,7 +1026,7 @@ Variable Definitions
 </div>
 </div>
 </div>
-<div id="a0cdaeef" class="cell" data-execution_count="6">
+<div id="0463d4f9" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gave_regression <span class="op">=</span> smf.ols(<span class="st">"gave ~ treatment"</span>, data<span class="op">=</span>data).fit()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>coef <span class="op">=</span> gave_regression.params[<span class="st">"treatment"</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>std_err <span class="op">=</span> gave_regression.bse[<span class="st">"treatment"</span>]</span>
@@ -1084,7 +1076,7 @@ Variable Definitions
 <p>This replicates the result from Table 2A Panel A in Karlan &amp; List (2007), showing that a match offer significantly boosts participation.</p>
 <p>OLS regression shows a statistically significant positive coefficient (≈ 0.0042) on the treatment variable. This confirms the t-test: assignment to the treatment group increased the likelihood of making a donation.</p>
 <p>This suggests that even a small behavioral nudge like mentioning a matching donation makes people more likely to contribute to charity. People respond to the perception of increased impact.</p>
-<div id="a66d7600" class="cell" data-execution_count="7">
+<div id="61bb65e7" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probit model</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1145,15 +1137,9 @@ Variable Definitions
 <section id="differences-between-match-rates" class="level3">
 <h3 class="anchored" data-anchor-id="differences-between-match-rates">Differences between Match Rates</h3>
 <p>Next, I assess the effectiveness of different sizes of matched donations on the response rate.</p>
-<p><em>todo: Use a series of t-tests to test whether the size of the match ratio has an effect on whether people donate or not. For example, does the 2:1 match rate lead increase the likelihood that someone donates as compared to the 1:1 match rate? Do your results support the “figures suggest” comment the authors make on page 8?</em></p>
-<p><em>todo: Assess the same issue using a regression. Specifically, create the variable <code>ratio1</code> then regress <code>gave</code> on <code>ratio1</code>, <code>ratio2</code>, and <code>ratio3</code> (or alternatively, regress <code>gave</code> on the categorical variable <code>ratio</code>). Interpret the coefficients and their statistical precision.</em></p>
-<p><em>todo: Calculate the response rate difference between the 1:1 and 2:1 match ratios and the 2:1 and 3:1 ratios. Do this directly from the data, and do it by computing the differences in the fitted coefficients of the previous regression. what do you conclude regarding the effectiveness of different sizes of matched donations?</em></p>
-<p>also include p-velue 2:1 vs 1:1, 3:1 vs 2:1, 3:1 vs 1:1</p>
-<p>for ols regresssion only have intercept, ration2, ratio3</p>
-<p>raw difference (2:1-1:1) raw difference (3:1 - 2:1) fitted difference (2:1 - 1:1) fitted difference (3:1 - 2:1)</p>
 <section id="response-rates-by-match-ratio" class="level4">
 <h4 class="anchored" data-anchor-id="response-rates-by-match-ratio">Response Rates by Match Ratio</h4>
-<div id="f8dafdd2" class="cell" data-execution_count="8">
+<div id="3485eacd" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="op">=</span> data[(data[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (data[<span class="st">"ratio"</span>].isin([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]))]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate means</span></span>
@@ -1185,7 +1171,7 @@ Variable Definitions
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/h7/9ry6pj514cb7qp5v6btr37ym0000gn/T/ipykernel_22843/2990980929.py:4: FutureWarning:
+<pre><code>/var/folders/h7/9ry6pj514cb7qp5v6btr37ym0000gn/T/ipykernel_40228/2990980929.py:4: FutureWarning:
 
 The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
 </code></pre>
@@ -1245,7 +1231,7 @@ The default of observed=False is deprecated and will be changed to True in a fut
 </section>
 <section id="regression-match-ratio-effects" class="level4">
 <h4 class="anchored" data-anchor-id="regression-match-ratio-effects">Regression: Match Ratio Effects</h4>
-<div id="7b38d2de" class="cell" data-execution_count="9">
+<div id="c0b64ef4" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Regression with dummy variables (baseline: 1:1 match)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1268,7 +1254,7 @@ The default of observed=False is deprecated and will be changed to True in a fut
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"95% CI Upper"</span>: confint[<span class="dv">1</span>].<span class="bu">round</span>(<span class="dv">5</span>)</span>
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>}).loc[[<span class="st">"Intercept"</span>, <span class="st">"ratio2"</span>, <span class="st">"ratio3"</span>]].reset_index().rename(columns<span class="op">=</span>{<span class="st">"index"</span>: <span class="st">"Term"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/h7/9ry6pj514cb7qp5v6btr37ym0000gn/T/ipykernel_22843/759364550.py:4: SettingWithCopyWarning:
+<pre><code>/var/folders/h7/9ry6pj514cb7qp5v6btr37ym0000gn/T/ipykernel_40228/759364550.py:4: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -1276,7 +1262,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/h7/9ry6pj514cb7qp5v6btr37ym0000gn/T/ipykernel_22843/759364550.py:5: SettingWithCopyWarning:
+/var/folders/h7/9ry6pj514cb7qp5v6btr37ym0000gn/T/ipykernel_40228/759364550.py:5: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -1343,7 +1329,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 <section id="difference-in-response-rates-data-vs.-regression-coefficients" class="level4">
 <h4 class="anchored" data-anchor-id="difference-in-response-rates-data-vs.-regression-coefficients">Difference in Response Rates (Data vs.&nbsp;Regression Coefficients)</h4>
-<div id="266f1cce" class="cell" data-execution_count="10">
+<div id="e2f8f5ae" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean differences and coefficient comparisons</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pd.DataFrame([</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    {</span>
@@ -1411,11 +1397,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <section id="size-of-charitable-contribution" class="level3">
 <h3 class="anchored" data-anchor-id="size-of-charitable-contribution">Size of Charitable Contribution</h3>
 <p>In this subsection, I analyze the effect of the size of matched donation on the size of the charitable contribution.</p>
-<p><em>todo: Calculate a t-test or run a bivariate linear regression of the donation amount on the treatment status. What do we learn from doing this analysis?</em></p>
-<p><em>todo: now limit the data to just people who made a donation and repeat the previous analysis. This regression allows you to analyze how much respondents donate conditional on donating some positive amount. Interpret the regression coefficients – what did we learn? Does the treatment coefficient have a causal interpretation?</em></p>
-<p><em>todo: Make two plot: one for the treatment group and one for the control. Each plot should be a histogram of the donation amounts only among people who donated. Add a red vertical bar or some other annotation to indicate the sample average for each plot.</em></p>
 <p>charts side by side and scale #### All Respondents: Does Treatment Affect Amount Donated?</p>
-<div id="4d70a615" class="cell" data-execution_count="11">
+<div id="e8139dfd" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>amount_reg_all <span class="op">=</span> smf.ols(<span class="st">"amount ~ treatment"</span>, data<span class="op">=</span>data).fit()</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>pd.DataFrame([{</span>
@@ -1464,7 +1447,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <p>This suggests that those who received a matching letter donated slightly more on average. However, the result is only marginally significant (at the 10% level). This weak evidence may indicate that the offer of a match has a small impact on the total amount donated—though for most people, the presence of the match does not substantially alter donation size.</p>
 <section id="conditional-on-donation-do-donors-give-more-if-matched" class="level4">
 <h4 class="anchored" data-anchor-id="conditional-on-donation-do-donors-give-more-if-matched">Conditional on Donation: Do Donors Give More if Matched?</h4>
-<div id="78c4e829" class="cell" data-execution_count="12">
+<div id="ac893bef" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to donors only</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>donors <span class="op">=</span> data[data[<span class="st">"gave"</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1518,7 +1501,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 <section id="distribution-of-donations-among-donors" class="level4">
 <h4 class="anchored" data-anchor-id="distribution-of-donations-among-donors">Distribution of Donations Among Donors</h4>
-<div id="f6e7340d" class="cell" data-execution_count="13">
+<div id="7317c00c" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>treatment_donors <span class="op">=</span> data[(data[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (data[<span class="st">"gave"</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>control_donors <span class="op">=</span> data[(data[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (data[<span class="st">"gave"</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1578,8 +1561,7 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <p>Further suppose that the true distribution of respondents who do get a charitable donation match of any size is Bernoulli with probability p=0.022 that a donation is made.</p>
 <section id="law-of-large-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h3>
-<p><em>to do: Make a plot like those on slide 43 from our first class and explain the plot to the reader. To do this, you will simulate 100,00 draws from the control distribution and 10,000 draws from the treatment distribution. You’ll then calculate a vector of 10,000 differences, and then you’ll plot the cumulative average of that vector of differences. Comment on whether the cumulative average approaches the true difference in means.</em></p>
-<div id="82be4377" class="cell" data-execution_count="14">
+<div id="d871bba8" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1616,16 +1598,12 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 </div>
 </div>
 </div>
-<section id="interpretation-1" class="level4">
-<h4 class="anchored" data-anchor-id="interpretation-1">Interpretation</h4>
 <p>This plot demonstrates the Law of Large Numbers. As we simulate more and more observations, the cumulative average of the differences converges toward the true mean difference (0.004). Initially, there’s randomness and fluctuation, but the line stabilizes as the number of observations increases.</p>
 <p>This convergence is the foundation for using sample averages to estimate population parameters and underpins why large sample sizes give us more reliable estimates in experiments.</p>
 </section>
-</section>
 <section id="central-limit-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="central-limit-theorem">Central Limit Theorem</h3>
-<p><em>to do: Make 4 histograms like those on slide 44 from our first class at sample sizes 50, 200, 500, and 1000 and explain these plots to the reader. To do this for a sample size of e.g.&nbsp;50, take 50 draws from each of the control and treatment distributions, and calculate the average difference between those draws. Then repeat that process 999 more times so that you have 1000 averages. Plot the histogram of those averages. Comment on whether zero is in the “middle” of the distribution or whether it’s in the “tail.”</em></p>
-<div id="2eeb3bdc" class="cell" data-execution_count="15">
+<div id="a3446dcc" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1672,8 +1650,6 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 </div>
 </div>
 </div>
-<section id="interpretation-2" class="level4">
-<h4 class="anchored" data-anchor-id="interpretation-2">Interpretation</h4>
 <p>These four histograms illustrate how the sampling distribution of the difference in means behaves at increasing sample sizes:</p>
 <p>At n = 50, the distribution is quite wide and skewed. Zero is within the center-ish but not tightly.</p>
 <p>As sample size increases, the distribution becomes tighter, more symmetric, and centered.</p>
@@ -1683,7 +1659,6 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <p>Also note: zero shifts from being more “middle-ish” in smaller samples to being closer to the tail as the signal (the true effect) dominates the noise.</p>
 
 
-</section>
 </section>
 </section>
 
