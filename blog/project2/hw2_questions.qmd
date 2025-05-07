@@ -15,11 +15,6 @@ Blueprinty is a small firm that makes software for developing blueprints specifi
 However, Blueprinty has collected data on 1,500 mature (non-startup) engineering firms. The data include each firm's number of patents awarded over the last 5 years, regional location, age since incorporation, and whether or not the firm uses Blueprinty's software. The marketing team would like to use this data to make the claim that firms using Blueprinty's software are more successful in getting their patent applications approved.
 
 
-### Data
-
-_todo: Read in data._
-
-_todo: Compare histograms and means of number of patents by customer status. What do you observe?_
 
 ### Data
 
@@ -30,28 +25,26 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load the data
 df = pd.read_csv("blueprinty.csv")
 df.head()
 ```
 
 The dataset includes 1,500 engineering firms. For each firm, we have the number of patents awarded in the past five years, their geographic region, age since incorporation, and a binary indicator for whether they are a Blueprinty customer (`iscustomer` = 1) or not (`iscustomer` = 0). The `.head()` command confirms the dataset structure and that key variables are available.
 
----
 
 Next, we visualize the distribution of patent counts to see if there's any notable difference between customers and non-customers.
 
 ```{python}
 sns.set(style="whitegrid")
 
-# Histogram of patents by customer status (stacked)
+
 plt.figure(figsize=(10, 5))
 sns.histplot(
     data=df,
     x="patents",
     hue="iscustomer",
     bins=30,
-    multiple="stack",  # stack instead of dodge
+    multiple="stack", 
     palette="muted"
 )
 plt.title("Stacked Histogram of Patents by Customer Status")
@@ -62,8 +55,6 @@ plt.show()
 ```
 
 This histogram shows the number of patents across the two groups. We observe that both Blueprinty customers and non-customers most frequently hold between 2 and 4 patents. However, **Blueprinty customers (in blue) are more heavily represented in the higher patent count ranges**, particularly above 6. This visual evidence suggests a potential positive association between being a customer and patent success.
-
----
 
 To quantify the difference seen in the histogram, we calculate the average number of patents for each group.
 
@@ -83,7 +74,6 @@ This represents a **~19% increase** in average patent output for Blueprinty cust
 
 Blueprinty customers are not selected at random. It may be important to account for systematic differences in the age and regional location of customers vs non-customers.
 
-_todo: Compare regions and ages by customer status. What do you observe?_
 
 
 ```{python}
@@ -98,7 +88,6 @@ plt.show()
 
 This boxplot compares the age distribution of customer and non-customer firms. While there is substantial overlap, customers appear to be slightly older on average. There are also more older outliers among customers. This may indicate that **more established (older) firms are more likely to adopt Blueprinty's software**, potentially due to larger budgets or greater administrative capacity.
 
----
 
 ```{python}
 
@@ -128,7 +117,6 @@ plt.show()
 
 This bar chart reveals striking geographic variation in customer status. The **Northeast region stands out**, with **more Blueprinty customers than non-customers**, unlike all other regions where non-customers dominate. This indicates that the **Northeast may be a key market for Blueprinty**, and region is likely a major confounding factor. Any causal claim about the effect of the software must adjust for these regional differences.
 
----
 
 ```{python}
 # Average age by customer status
@@ -141,7 +129,6 @@ Here, we calculate the average firm age by customer status. On average:
 
 Although the difference is modest (~0.8 years), it reinforces the trend observed in the boxplot: **customers tend to be slightly older**, suggesting maturity and longevity might correlate with software adoption.
 
----
 
 ```{python}
 # Proportion of customers by region
@@ -154,7 +141,6 @@ This table provides the **proportion of customers within each region**:
 
 These proportions confirm that **Blueprinty’s customer base is heavily concentrated in the Northeast**. This supports the idea that customer status is **not randomly distributed**, and further emphasizes the need to control for region when analyzing the effect of the software on patenting outcomes.
 
----
 
 ### Summary
 
@@ -163,36 +149,17 @@ Our exploratory analysis shows that Blueprinty customers:
 - Are disproportionately located in the Northeast
 
 These differences suggest **customer status is correlated with observable firm characteristics**, making it essential to control for these factors in any model that attempts to evaluate the effect of using Blueprinty software. Ignoring age or region could lead to **biased conclusions**, mistakenly attributing differences in patent counts to the software when they may in fact reflect geography or firm maturity.
-### Estimation of Simple Poisson Model
-
-Since our outcome variable of interest can only be small integer values per a set unit of time, we can use a Poisson density to model the number of patents awarded to each engineering firm over the last 5 years. We start by estimating a simple Poisson model via Maximum Likelihood.
-
-_todo: Write down mathematically the likelihood for_ $Y \sim \text{Poisson}(\lambda)$. Note that $f(Y|\lambda) = e^{-\lambda}\lambda^Y/Y!$.
-
-_todo: Code the likelihood (or log-likelihood) function for the Poisson model. This is a function of lambda and Y. For example:_
-
-```
-poisson_loglikelihood <- function(lambda, Y){
-   ...
-}
-```
-
-_todo: Use your function to plot lambda on the horizontal axis and the likelihood (or log-likelihood) on the vertical axis for a range of lambdas (use the observed number of patents as the input for Y)._
-
-_todo: If you're feeling mathematical, take the first derivative of your likelihood or log-likelihood, set it equal to zero and solve for lambda. You will find lambda_mle is Ybar, which "feels right" because the mean of a Poisson distribution is lambda._
-
-_todo: Find the MLE by optimizing your likelihood function with optim() in R or sp.optimize() in Python._
-
 
 
 
 ## Estimation of Simple Poisson Model
 
+Since our outcome variable of interest can only be small integer values per a set unit of time, we can use a Poisson density to model the number of patents awarded to each engineering firm over the last 5 years. We start by estimating a simple Poisson model via Maximum Likelihood.
 
 
 To model the number of patents awarded per firm, we assume the data follow a Poisson distribution with parameter λ. This is appropriate for count data observed over a fixed time period. In this section, we define the Poisson log-likelihood, visualize it, and estimate the maximum likelihood value of λ both analytically and numerically.
 
----
+
 
 ### Step 1: Load and Inspect the Data
 
@@ -203,14 +170,13 @@ import matplotlib.pyplot as plt
 from scipy.special import gammaln
 from scipy.optimize import minimize
 
-# Load patent data
 df = pd.read_csv("blueprinty.csv")
 Y = df["patents"].values
 ```
 
 We load the `blueprinty.csv` dataset and extract the number of patents for each firm, stored in the variable `Y`.
 
----
+
 
 ### Step 2: Define the Log-Likelihood Function
 
@@ -224,7 +190,7 @@ This is the log-likelihood of the Poisson model (negated for use with optimizati
 
 ---
 
-### Step 3: Visualize the Log-Likelihood Curve
+#### Step 3: Visualize the Log-Likelihood Curve
 
 ```{python}
 lambdas = np.linspace(0.1, 10, 200)
@@ -245,7 +211,7 @@ This curve shows how the log-likelihood varies with different values of λ. The 
 
 ---
 
-### Step 4: Analytical MLE for Poisson
+#### Step 4: Analytical MLE for Poisson
 
 ```{python}
 lambda_mle_analytical = np.mean(Y)
@@ -258,9 +224,8 @@ lambda_mle_analytical
 
 This derivation confirms that the maximum likelihood estimator for λ is simply the mean of the observed data.
 
----
 
-### Step 5: Estimate λ Numerically
+#### Step 5: Estimate λ Numerically
 
 ```{python}
 # Find lambda using numerical optimization
@@ -273,7 +238,7 @@ Using numerical optimization, we minimize the negative log-likelihood to obtain 
 
 ---
 
-### Conclusion
+#### Conclusion
 
 This process demonstrates how to derive and estimate the Poisson MLE both mathematically and computationally. We verified that:
 - The **log-likelihood peaks at the sample mean**
@@ -285,30 +250,11 @@ This lays a strong foundation for moving into more complex models like Poisson r
 
 
 
-
-
 ### Estimation of Poisson Regression Model
 
 Next, we extend our simple Poisson model to a Poisson Regression Model such that $Y_i = \text{Poisson}(\lambda_i)$ where $\lambda_i = \exp(X_i'\beta)$. The interpretation is that the success rate of patent awards is not constant across all firms ($\lambda$) but rather is a function of firm characteristics $X_i$. Specifically, we will use the covariates age, age squared, region, and whether the firm is a customer of Blueprinty.
 
-_todo: Update your likelihood or log-likelihood function with an additional argument to take in a covariate matrix X. Also change the parameter of the model from lambda to the beta vector. In this model, lambda must be a positive number, so we choose the inverse link function g_inv() to be exp() so that_ $\lambda_i = e^{X_i'\beta}$. _For example:_
 
-```
-poisson_regression_likelihood <- function(beta, Y, X){
-   ...
-}
-```
-
-_todo: Use your function along with R's optim() or Python's sp.optimize() to find the MLE vector and the Hessian of the Poisson model with covariates. Specifically, the first column of X should be all 1's to enable a constant term in the model, and the subsequent columns should be age, age squared, binary variables for all but one of the regions, and the binary customer variable. Use the Hessian to find standard errors of the beta parameter estimates and present a table of coefficients and standard errors._
-
-_todo: Check your results using R's glm() function or Python sm.GLM() function._
-
-_todo: Interpret the results._ 
-
-_todo: What do you conclude about the effect of Blueprinty's software on patent success? Because the beta coefficients are not directly interpretable, it may help to create two fake datasets: X_0 and X_1 where X_0 is the X data but with iscustomer=0 for every observation and X_1 is the X data but with iscustomer=1 for every observation. Then, use X_0 and your fitted model to get the vector of predicted number of patents (y_pred_0) for every firm in the dataset, and use X_1 to get Y_pred_1 for every firm. Then subtract y_pred_1 minus y_pred_0 and take the average of that vector of differences._
-
-
-## Estimation of Poisson Regression Model
 
 ```{python}
 import numpy as np
@@ -316,15 +262,13 @@ import pandas as pd
 import statsmodels.api as sm
 from patsy import dmatrix
 
-# Load and prepare the data
 df = pd.read_csv("blueprinty.csv")
 df["age2"] = df["age"] ** 2
 
-# Create design matrix X with intercept, age, age squared, region dummies, and customer status
+
 X = dmatrix("1 + age + age2 + C(region) + iscustomer", data=df, return_type='dataframe')
 Y = df["patents"]
 
-# Fit Poisson regression
 poisson_model = sm.GLM(Y, X, family=sm.families.Poisson())
 poisson_results = poisson_model.fit()
 ```
@@ -372,7 +316,7 @@ effect_estimate = np.mean(y_pred_1 - y_pred_0)
 effect_estimate
 ```
 
----
+
 
 #### Interpretation:
 
@@ -410,7 +354,7 @@ AirBnB is a popular platform for booking short-term rentals. In March 2017, stud
 ::::
 
 
-_todo: Assume the number of reviews is a good proxy for the number of bookings. Perform some exploratory data analysis to get a feel for the data, handle or drop observations with missing values on relevant variables, build one or more models (e.g., a poisson regression model for the number of bookings as proxied by the number of reviews), and interpret model coefficients to describe variation in the number of reviews as a function of the variables provided._
+
 ## AirBnB Case Study: Poisson Regression
 
 #### Data Preparation
@@ -421,17 +365,17 @@ import numpy as np
 import statsmodels.api as sm
 from patsy import dmatrix
 
-# Load the dataset
+
 df = pd.read_csv("airbnb.csv")
 
-# Keep relevant variables and drop rows with missing data
+
 cols = [
     "room_type", "bathrooms", "bedrooms", "price", "number_of_reviews",
     "review_scores_cleanliness", "review_scores_location", "review_scores_value", "instant_bookable"
 ]
 df_clean = df[cols].dropna()
 
-# Convert categorical variable to numeric
+
 df_clean["instant_bookable"] = df_clean["instant_bookable"].map({"f": 0, "t": 1})
 ```
 
@@ -487,7 +431,7 @@ This table gives a statistical overview of the cleaned dataset. For example, we 
 #### Model Specification and Fitting
 
 ```{python}
-# Create design matrix for Poisson regression
+
 X = dmatrix(
     "1 + price + bedrooms + bathrooms + review_scores_cleanliness + "
     "review_scores_location + review_scores_value + C(room_type) + instant_bookable",
@@ -496,7 +440,7 @@ X = dmatrix(
 )
 Y = df_clean["number_of_reviews"]
 
-# Fit Poisson model
+
 poisson_model = sm.GLM(Y, X, family=sm.families.Poisson())
 poisson_results = poisson_model.fit()
 ```
@@ -507,7 +451,7 @@ The model uses a **log link function**, where the log of the expected number of 
 #### Poisson Regression Results (Formatted)
 
 ```{python}
-# Extract and clean summary table
+
 summary_table = poisson_results.summary2().tables[1].reset_index()
 summary_table.rename(columns={
     "index": "Variable",
@@ -519,7 +463,6 @@ summary_table.rename(columns={
     "0.975]": "95% CI Upper"
 }, inplace=True)
 
-# Format output
 formatted_summary = summary_table[[
     "Variable", "Coefficient", "Std. Error", "z-value", "p-value", "95% CI Lower", "95% CI Upper"
 ]].round(4)
