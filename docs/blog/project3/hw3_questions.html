@@ -187,22 +187,9 @@ window.Quarto = {
   <li><a href="#likelihood-for-the-multi-nomial-logit-mnl-model" id="toc-likelihood-for-the-multi-nomial-logit-mnl-model" class="nav-link active" data-scroll-target="#likelihood-for-the-multi-nomial-logit-mnl-model">1. Likelihood for the Multi-nomial Logit (MNL) Model</a></li>
   <li><a href="#simulate-conjoint-data" id="toc-simulate-conjoint-data" class="nav-link" data-scroll-target="#simulate-conjoint-data">2. Simulate Conjoint Data</a></li>
   <li><a href="#preparing-the-data-for-estimation" id="toc-preparing-the-data-for-estimation" class="nav-link" data-scroll-target="#preparing-the-data-for-estimation">3. Preparing the Data for Estimation</a></li>
-  <li><a href="#estimation-via-maximum-likelihood" id="toc-estimation-via-maximum-likelihood" class="nav-link" data-scroll-target="#estimation-via-maximum-likelihood">4. Estimation via Maximum Likelihood</a>
-  <ul class="collapse">
-  <li><a href="#objective" id="toc-objective" class="nav-link" data-scroll-target="#objective">1. Objective</a></li>
-  <li><a href="#model-structure" id="toc-model-structure" class="nav-link" data-scroll-target="#model-structure">2. Model Structure</a></li>
-  <li><a href="#estimation-results" id="toc-estimation-results" class="nav-link" data-scroll-target="#estimation-results">3. Estimation Results</a></li>
-  <li><a href="#model-fit-and-validity" id="toc-model-fit-and-validity" class="nav-link" data-scroll-target="#model-fit-and-validity">4. Model Fit and Validity</a></li>
-  <li><a href="#practical-implications" id="toc-practical-implications" class="nav-link" data-scroll-target="#practical-implications">5. Practical Implications</a></li>
-  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">6. Limitations</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
-  </ul></li>
+  <li><a href="#estimation-via-maximum-likelihood" id="toc-estimation-via-maximum-likelihood" class="nav-link" data-scroll-target="#estimation-via-maximum-likelihood">4. Estimation via Maximum Likelihood</a></li>
   <li><a href="#estimation-via-bayesian-methods" id="toc-estimation-via-bayesian-methods" class="nav-link" data-scroll-target="#estimation-via-bayesian-methods">5. Estimation via Bayesian Methods</a></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">6. Discussion</a>
-  <ul class="collapse">
-  <li><a href="#interpreting-the-parameter-estimates" id="toc-interpreting-the-parameter-estimates" class="nav-link" data-scroll-target="#interpreting-the-parameter-estimates">Interpreting the Parameter Estimates</a></li>
-  <li><a href="#extending-to-hierarchical-multi-level-models" id="toc-extending-to-hierarchical-multi-level-models" class="nav-link" data-scroll-target="#extending-to-hierarchical-multi-level-models">Extending to Hierarchical (Multi-Level) Models</a></li>
-  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">6. Discussion</a></li>
   </ul>
 </nav>
     </div>
@@ -282,7 +269,7 @@ Note
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="55f9b498" class="cell" data-execution_count="1">
+<div id="a266bb6b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -352,9 +339,8 @@ Note
 <section id="preparing-the-data-for-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="preparing-the-data-for-estimation">3. Preparing the Data for Estimation</h2>
 <p>The “hard part” of the MNL likelihood function is organizing the data, as we need to keep track of 3 dimensions (consumer <span class="math inline">\(i\)</span>, covariate <span class="math inline">\(k\)</span>, and product <span class="math inline">\(j\)</span>) instead of the typical 2 dimensions for cross-sectional regression models (consumer <span class="math inline">\(i\)</span> and covariate <span class="math inline">\(k\)</span>). The fact that each task for each respondent has the same number of alternatives (3) helps. In addition, we need to convert the categorical variables for brand and ads into binary variables.</p>
-<p><em>todo: reshape and prep the data</em></p>
 <p>We now load the CSV, convert categorical variables into dummy variables, and prepare the data for modeling.</p>
-<div id="a9a63b62" class="cell" data-execution_count="2">
+<div id="6b587154" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
@@ -362,7 +348,7 @@ Note
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the raw data</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>conjoint_data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="35">
 <div>
 
 
@@ -431,7 +417,7 @@ Note
 </div>
 </div>
 <p>One-Hot Encode Brand and Ad Columns</p>
-<div id="1b24429c" class="cell" data-execution_count="3">
+<div id="fb717f32" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-hot encode brand and ad</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data_encoded <span class="op">=</span> pd.get_dummies(conjoint_data, columns<span class="op">=</span>[<span class="st">"brand"</span>, <span class="st">"ad"</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -444,7 +430,7 @@ Note
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># View cleaned data</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>data_encoded.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="36">
 <div>
 
 
@@ -519,7 +505,7 @@ Note
 </div>
 </div>
 <p>Check Shape and Unique Combinations (Optional Debug)</p>
-<div id="2ac56fe4" class="cell" data-execution_count="4">
+<div id="d49c22fc" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm expected shape and unique groupings</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data shape: </span><span class="sc">{</span>data_encoded<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -556,10 +542,8 @@ Unique tasks: 10</code></pre>
 </section>
 <section id="estimation-via-maximum-likelihood" class="level2">
 <h2 class="anchored" data-anchor-id="estimation-via-maximum-likelihood">4. Estimation via Maximum Likelihood</h2>
-<p><em>todo: Code up the log-likelihood function.</em></p>
-<p><em>todo: Use <code>optim()</code> in R or <code>scipy.optimize()</code> in Python to find the MLEs for the 4 parameters (<span class="math inline">\(\beta_\text{netflix}\)</span>, <span class="math inline">\(\beta_\text{prime}\)</span>, <span class="math inline">\(\beta_\text{ads}\)</span>, <span class="math inline">\(\beta_\text{price}\)</span>), as well as their standard errors (from the Hessian). For each parameter construct a 95% confidence interval.</em></p>
 <p>We now estimate the MNL model using Maximum Likelihood Estimation (MLE).</p>
-<div id="08defbea" class="cell" data-execution_count="5">
+<div id="6f6eddbe" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
@@ -575,7 +559,7 @@ Unique tasks: 10</code></pre>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>n_alts <span class="op">=</span> <span class="dv">3</span>  <span class="co"># 3 alternatives per choice task</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Define the Log-Likelihood Function</p>
-<div id="817c2650" class="cell" data-execution_count="6">
+<div id="5e8d874d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> neg_log_likelihood(beta):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute utilities</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    utilities <span class="op">=</span> X <span class="op">@</span> beta  <span class="co"># linear combination</span></span>
@@ -596,7 +580,7 @@ Unique tasks: 10</code></pre>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>np.<span class="bu">sum</span>(np.log(chosen_probs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Estimate Parameters</p>
-<div id="73a4252c" class="cell" data-execution_count="7">
+<div id="013faf2d" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guess for parameters</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>beta_init <span class="op">=</span> np.zeros(X.shape[<span class="dv">1</span>])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -624,7 +608,7 @@ Unique tasks: 10</code></pre>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>param_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <div>
 
 
@@ -678,13 +662,10 @@ Unique tasks: 10</code></pre>
 </div>
 </div>
 </div>
-<section id="objective" class="level3">
-<h3 class="anchored" data-anchor-id="objective">1. Objective</h3>
+<p>####Objective</p>
 <p>In this section, we apply <strong>Maximum Likelihood Estimation (MLE)</strong> to estimate the part-worth utilities (i.e., β coefficients) in a <strong>Multinomial Logit (MNL)</strong> model. Each β represents the marginal utility of an attribute (e.g., brand, price, ads) and is estimated by maximizing the likelihood of the observed choices made by consumers in the simulated conjoint dataset.</p>
-<hr>
-</section>
-<section id="model-structure" class="level3">
-<h3 class="anchored" data-anchor-id="model-structure">2. Model Structure</h3>
+<section id="model-structure" class="level4">
+<h4 class="anchored" data-anchor-id="model-structure">Model Structure</h4>
 <p>The MNL model assumes that each respondent chooses the alternative with the highest utility from a set of 3 options. The utility for respondent ( i ), task ( t ), and alternative ( j ) is modeled as:</p>
 <p>[ U_{ijt} = X_{ijt} + _{ijt} ]</p>
 <ul>
@@ -694,8 +675,8 @@ Unique tasks: 10</code></pre>
 </ul>
 <p>The log-likelihood is computed as the sum of the log probabilities of the chosen alternatives, and we use <code>scipy.optimize.minimize</code> with the BFGS algorithm to find the β vector that maximizes it.</p>
 </section>
-<section id="estimation-results" class="level3">
-<h3 class="anchored" data-anchor-id="estimation-results">3. Estimation Results</h3>
+<section id="estimation-results" class="level4">
+<h4 class="anchored" data-anchor-id="estimation-results">Estimation Results</h4>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -737,6 +718,7 @@ Unique tasks: 10</code></pre>
 </tr>
 </tbody>
 </table>
+</section>
 <section id="interpretation" class="level4">
 <h4 class="anchored" data-anchor-id="interpretation">Interpretation</h4>
 <ul>
@@ -758,9 +740,8 @@ Unique tasks: 10</code></pre>
 </ul></li>
 </ul>
 </section>
-</section>
-<section id="model-fit-and-validity" class="level3">
-<h3 class="anchored" data-anchor-id="model-fit-and-validity">4. Model Fit and Validity</h3>
+<section id="model-fit-and-validity" class="level4">
+<h4 class="anchored" data-anchor-id="model-fit-and-validity">Model Fit and Validity</h4>
 <p>While we don’t compute formal goodness-of-fit measures here (e.g., log-likelihood at convergence, McFadden’s R²), several signs point to a well-performing model:</p>
 <ul>
 <li>The coefficients have <strong>expected signs and plausible magnitudes</strong>,</li>
@@ -768,20 +749,20 @@ Unique tasks: 10</code></pre>
 <li>The model aligns with <strong>economic theory</strong> and <strong>consumer behavior literature</strong>.</li>
 </ul>
 </section>
-<section id="practical-implications" class="level3">
-<h3 class="anchored" data-anchor-id="practical-implications">5. Practical Implications</h3>
+<section id="practical-implications" class="level4">
+<h4 class="anchored" data-anchor-id="practical-implications">Practical Implications</h4>
 <p>This MLE model enables firms to: - <strong>Quantify trade-offs</strong> consumers are willing to make (e.g., how much more they’d pay for no ads), - <strong>Forecast market shares</strong> by plugging in attribute levels for new offerings, - <strong>Design optimal product bundles</strong> (e.g., price tiering based on ad presence), - Perform <strong>What-if scenario simulations</strong>: “What happens if we increase Netflix’s price by $2?”</p>
 </section>
-<section id="limitations" class="level3">
-<h3 class="anchored" data-anchor-id="limitations">6. Limitations</h3>
+<section id="limitations" class="level4">
+<h4 class="anchored" data-anchor-id="limitations">Limitations</h4>
 <ul>
 <li><strong>Homogeneous preferences</strong>: The MNL model assumes all consumers share the same β. This masks <strong>preference heterogeneity</strong> and may limit personalization or segmentation.</li>
 <li><strong>IID error assumption</strong>: The Gumbel-distributed error terms assume independence across alternatives, which may not hold in nested or correlated choice sets (e.g., two similar streaming services).</li>
 </ul>
 <p>These limitations can be addressed with a <strong>random coefficients (mixed logit) model</strong>, as discussed in later sections.</p>
 </section>
-<section id="summary" class="level3">
-<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<section id="summary" class="level4">
+<h4 class="anchored" data-anchor-id="summary">Summary</h4>
 <p>The MLE estimation has successfully recovered the true structure of simulated consumer preferences:</p>
 <ul>
 <li>Consumers strongly prefer <strong>Netflix &gt; Prime &gt; Hulu</strong>,</li>
@@ -793,14 +774,8 @@ Unique tasks: 10</code></pre>
 </section>
 <section id="estimation-via-bayesian-methods" class="level2">
 <h2 class="anchored" data-anchor-id="estimation-via-bayesian-methods">5. Estimation via Bayesian Methods</h2>
-<p><em>todo: code up a metropolis-hasting MCMC sampler of the posterior distribution. Take 11,000 steps and throw away the first 1,000, retaining the subsequent 10,000.</em></p>
-<p><em>hint: Use N(0,5) priors for the betas on the binary variables, and a N(0,1) prior for the price beta.</em></p>
-<p>_hint: instead of calculating post=lik*prior, you can work in the log-space and calculate log-post = log-lik + log-prior (this should enable you to re-use your log-likelihood function from the MLE section just above)_</p>
-<p><em>hint: King Markov (in the video) use a candidate distribution of a coin flip to decide whether to move left or right among his islands. Unlike King Markov, we have 4 dimensions (because we have 4 betas) and our dimensions are continuous. So, use a multivariate normal distribution to pospose the next location for the algorithm to move to. I recommend a MNV(mu, Sigma) where mu=c(0,0,0,0) and sigma has diagonal values c(0.05, 0.05, 0.05, 0.005) and zeros on the off-diagonal. Since this MVN has no covariances, you can sample each dimension independently (so 4 univariate normals instead of 1 multivariate normal), where the first 3 univariate normals are N(0,0.05) and the last one if N(0,0.005).</em></p>
-<p><em>todo: for at least one of the 4 parameters, show the trace plot of the algorithm, as well as the histogram of the posterior distribution.</em></p>
-<p><em>todo: report the 4 posterior means, standard deviations, and 95% credible intervals and compare them to your results from the Maximum Likelihood approach.</em></p>
 <p>We implement Metropolis-Hastings MCMC to sample from the posterior distribution of the 4 beta coefficients.</p>
-<div id="221517c1" class="cell" data-execution_count="8">
+<div id="7edddf4c" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -815,7 +790,7 @@ Unique tasks: 10</code></pre>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>neg_log_likelihood(beta) <span class="op">+</span> log_prior(beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Metropolis-Hastings MCMC Sampler</p>
-<div id="281fd5a9" class="cell" data-execution_count="9">
+<div id="f2eaaf19" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n_iter <span class="op">=</span> <span class="dv">11000</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>burn_in <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>n_params <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
@@ -849,7 +824,7 @@ Unique tasks: 10</code></pre>
 </div>
 </div>
 <p>Trace Plot and Posterior Histogram</p>
-<div id="c8f6ea1d" class="cell" data-execution_count="10">
+<div id="378f784e" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>posterior <span class="op">=</span> samples[burn_in:, :]</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>param_names <span class="op">=</span> [<span class="st">"Netflix"</span>, <span class="st">"Prime"</span>, <span class="st">"Ads"</span>, <span class="st">"price"</span>]</span>
@@ -871,7 +846,7 @@ Unique tasks: 10</code></pre>
 </div>
 </div>
 <p>Posterior Summary Statistics</p>
-<div id="128913f0" class="cell" data-execution_count="11">
+<div id="b23b7466" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>posterior_means <span class="op">=</span> posterior.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>posterior_std <span class="op">=</span> posterior.std(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>credible_intervals <span class="op">=</span> np.percentile(posterior, [<span class="fl">2.5</span>, <span class="fl">97.5</span>], axis<span class="op">=</span><span class="dv">0</span>).T</span>
@@ -885,7 +860,7 @@ Unique tasks: 10</code></pre>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>posterior_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="44">
 <div>
 
 
@@ -950,88 +925,16 @@ Unique tasks: 10</code></pre>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">6. Discussion</h2>
-<p><em>todo: Suppose you did not simulate the data. What do you observe about the parameter estimates? What does <span class="math inline">\(\beta_\text{Netflix} &gt; \beta_\text{Prime}\)</span> mean? Does it make sense that <span class="math inline">\(\beta_\text{price}\)</span> is negative?</em></p>
-<p><em>todo: At a high level, discuss what change you would need to make in order to simulate data from — and estimate the parameters of — a multi-level (aka random-parameter or hierarchical) model. This is the model we use to analyze “real world” conjoint data.</em></p>
-<section id="interpreting-the-parameter-estimates" class="level3">
-<h3 class="anchored" data-anchor-id="interpreting-the-parameter-estimates">Interpreting the Parameter Estimates</h3>
-<p>Let us assume that we did <strong>not simulate</strong> the data ourselves and instead received this conjoint dataset from a real-world consumer study on streaming service preferences.</p>
-<p>From both the <strong>Maximum Likelihood Estimation</strong> and <strong>Bayesian MCMC results</strong>, we observe the following pattern in the estimated coefficients:</p>
-<ul>
-<li><strong>β_Netflix &gt; β_Prime &gt; 0</strong></li>
-<li><strong>β_Ads &lt; 0</strong></li>
-<li><strong>β_price &lt; 0</strong></li>
-</ul>
-<section id="what-does-β_netflix-β_prime-mean" class="level4">
-<h4 class="anchored" data-anchor-id="what-does-β_netflix-β_prime-mean">What does β_Netflix &gt; β_Prime mean?</h4>
-<p>This tells us that, on average, consumers in this sample derive more utility from a streaming service branded as <strong>Netflix</strong> than from one branded <strong>Amazon Prime</strong>, holding ad presence and price constant. In other words, <strong>brand identity alone has a measurable impact</strong> on perceived value — likely due to factors such as:</p>
-<ul>
-<li>Content library perception,</li>
-<li>Brand familiarity or trust,</li>
-<li>User interface experience.</li>
-</ul>
-<p>The fact that <strong>β_Prime &gt; 0</strong> but less than <strong>β_Netflix</strong> suggests that Prime is also positively valued, but to a lesser degree.</p>
-<p>Importantly, this result implies <strong>brand preference exists even when controlling for other features</strong>, and it can be quantified using part-worth utilities in the MNL framework.</p>
-</section>
-<section id="does-it-make-sense-that-β_price-is-negative" class="level4">
-<h4 class="anchored" data-anchor-id="does-it-make-sense-that-β_price-is-negative">Does it make sense that β_price is negative?</h4>
-<p>Yes — this is consistent with standard economic theory and rational consumer behavior. A <strong>negative price coefficient</strong> indicates that higher monthly subscription costs reduce utility, making a consumer less likely to choose that option. This is a foundational assumption in discrete choice models: <strong>all else equal, consumers prefer lower prices</strong>.</p>
-<p>Similarly, a <strong>negative coefficient on Ads (β_Ads)</strong> supports the intuitive notion that users would prefer an ad-free experience. The more negative this value is, the more consumers are willing to pay to avoid ads.</p>
-</section>
-</section>
-<section id="extending-to-hierarchical-multi-level-models" class="level3">
-<h3 class="anchored" data-anchor-id="extending-to-hierarchical-multi-level-models">Extending to Hierarchical (Multi-Level) Models</h3>
-<p>The multinomial logit (MNL) model we’ve estimated so far assumes that <strong>all individuals share the same set of preferences</strong> — i.e., a single global β vector. However, in real-world applications, this is often too simplistic because:</p>
-<ul>
-<li>People differ in their sensitivity to price,</li>
-<li>Some care more about ads than others,</li>
-<li>Brand preference can vary widely by demographics or prior experience.</li>
-</ul>
-<section id="the-solution-a-random-coefficients-logit-model-aka-mixed-logit-or-hierarchical-bayes-model" class="level4">
-<h4 class="anchored" data-anchor-id="the-solution-a-random-coefficients-logit-model-aka-mixed-logit-or-hierarchical-bayes-model">The Solution: A Random Coefficients Logit Model (aka Mixed Logit or Hierarchical Bayes Model)</h4>
-<p>To account for this <strong>preference heterogeneity</strong>, we can extend the model by allowing each individual ( i ) to have their own coefficient vector ( _i ), drawn from a population-level distribution:</p>
-<p>[ _i (, ) ]</p>
-<p>Here: - ( ) is the <strong>mean preference vector</strong> across the population, - ( ) is the <strong>covariance matrix</strong>, capturing variation and correlation in preferences.</p>
-</section>
-<section id="to-simulate-from-this-model" class="level4">
-<h4 class="anchored" data-anchor-id="to-simulate-from-this-model">To Simulate from This Model</h4>
-<ol type="1">
-<li><strong>Simulate individual-level betas</strong>:
-<ul>
-<li>Draw ( _i ) from ( (, ) ) for each respondent.</li>
-</ul></li>
-<li>**Simulate choices using ( _i )**:
-<ul>
-<li>Use each respondent’s own ( _i ) to simulate their choices across tasks.</li>
-<li>This introduces realistic variation in responses.</li>
-</ul></li>
-</ol>
-</section>
-<section id="to-estimate-the-model" class="level4">
-<h4 class="anchored" data-anchor-id="to-estimate-the-model">To Estimate the Model</h4>
-<ul>
-<li><strong>Bayesian estimation via MCMC (e.g., Gibbs sampling or Hamiltonian Monte Carlo)</strong>:
-<ul>
-<li>This allows inference of both ( , ) and the individual ( _i ) values simultaneously.</li>
-</ul></li>
-<li><strong>Empirical Bayes / Maximum Simulated Likelihood</strong>:
-<ul>
-<li>Use simulated MLE to integrate over the distribution of random coefficients.</li>
-</ul></li>
-</ul>
-</section>
-<section id="why-it-matters-1" class="level4">
-<h4 class="anchored" data-anchor-id="why-it-matters-1">Why It Matters</h4>
-<ul>
-<li><strong>Individual-level predictions</strong>: You can better personalize recommendations or offers.</li>
-<li><strong>Market segmentation</strong>: Clustering on ( _i ) helps identify consumer groups.</li>
-<li><strong>Policy simulation</strong>: More accurate estimates of price sensitivity and willingness-to-pay.</li>
-</ul>
-<hr>
-<p>In summary, while the basic MNL model offers useful population-level insights, a <strong>hierarchical model reflects the diversity of preferences in real markets</strong>, making it the gold standard for analyzing “real-world” conjoint data.</p>
+<p>Suppose we had not simulated the data ourselves and instead received this conjoint dataset from a real-world consumer study on streaming service preferences. Based on the results from both Maximum Likelihood Estimation (MLE) and Bayesian MCMC, we observe consistent patterns in the estimated coefficients: Netflix is more preferred than Prime (β_Netflix &gt; β_Prime &gt; 0), advertisements reduce utility (β_Ads &lt; 0), and price sensitivity is negative (β_price &lt; 0).</p>
+<p>The finding that β_Netflix is greater than β_Prime suggests that, on average, consumers derive more utility from a streaming service branded as Netflix than from one branded as Amazon Prime, even when ad presence and price are held constant. This highlights that brand identity alone contributes meaningfully to perceived value. Such differences likely stem from factors like content library quality, brand familiarity, and user interface design. The fact that both coefficients are positive but different in magnitude indicates that Prime is valued by consumers, just less so than Netflix. This pattern reflects measurable and quantifiable brand preference in the MNL framework.</p>
+<p>The negative coefficient on price is both expected and consistent with rational economic behavior. A negative β_price means that, holding all else equal, higher subscription costs lower a service’s utility, making consumers less likely to choose it. This aligns with foundational assumptions in discrete choice models: consumers prefer lower prices. Likewise, the significantly negative coefficient on Ads (β_Ads) indicates that users prefer ad-free experiences. The more negative this value, the greater the utility loss associated with ads — which also implies that consumers may be willing to pay more to avoid them.</p>
+<p>While the MNL model provides useful insights, it assumes that all individuals share the same set of preferences, that is, one global β vector. In reality, this assumption is overly simplistic. Consumers differ widely in their sensitivity to price, their tolerance for ads, and their brand preferences, often influenced by demographics, habits, or prior experiences.</p>
+<p>To model this heterogeneity, we can extend to a random coefficients logit model, also known as a mixed logit or hierarchical Bayes model. In this framework, each respondent ( i ) has their own vector of coefficients ( _i ), which is assumed to be drawn from a population distribution ( _i (, ) ). Here, ( ) captures the average preference across the population, and ( ) captures the variance and potential correlations in preferences across individuals.</p>
+<p>Simulating from such a model would involve first drawing a unique β vector for each respondent and then simulating their choices based on their personalized utility function. This introduces variation that mirrors real consumer behavior more closely. Estimating this model can be done using Bayesian MCMC techniques, where both the individual-level betas and population-level parameters are inferred simultaneously, or through empirical Bayes or maximum simulated likelihood methods, which integrate over the assumed population distribution.</p>
+<p>The benefit of this hierarchical approach is that it supports more granular analyses. It enables personalized predictions, such as forecasting what a specific user would choose given their estimated β. It also enables more accurate market segmentation, where users with similar preferences can be grouped and targeted effectively. Finally, it improves policy simulation and pricing strategy, providing a more nuanced understanding of willingness-to-pay across different segments of the population.</p>
+<p>In summary, while the basic MNL model delivers valuable population-level insights, extending it to a hierarchical form allows us to better reflect and leverage the diversity in real-world preferences. This makes it a more realistic and powerful tool for analyzing conjoint data in practice.</p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->

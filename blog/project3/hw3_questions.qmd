@@ -133,7 +133,6 @@ conjoint_data = conjoint_data[["resp", "task", "brand", "ad", "price", "choice"]
 
 The "hard part" of the MNL likelihood function is organizing the data, as we need to keep track of 3 dimensions (consumer $i$, covariate $k$, and product $j$) instead of the typical 2 dimensions for cross-sectional regression models (consumer $i$ and covariate $k$). The fact that each task for each respondent has the same number of alternatives (3) helps.  In addition, we need to convert the categorical variables for brand and ads into binary variables.
 
-_todo: reshape and prep the data_
 
 We now load the CSV, convert categorical variables into dummy variables, and prepare the data for modeling.
 
@@ -218,9 +217,6 @@ By treating ads as a structured, binary attribute in our experiment, we can **qu
 
 ## 4. Estimation via Maximum Likelihood
 
-_todo: Code up the log-likelihood function._
-
-_todo: Use `optim()` in R or `scipy.optimize()` in Python to find the MLEs for the 4 parameters ($\beta_\text{netflix}$, $\beta_\text{prime}$, $\beta_\text{ads}$, $\beta_\text{price}$), as well as their standard errors (from the Hessian). For each parameter construct a 95% confidence interval._
 
 We now estimate the MNL model using Maximum Likelihood Estimation (MLE).
 
@@ -293,13 +289,12 @@ param_summary = pd.DataFrame({
 param_summary
 ```
 
-### 1. Objective
+####Objective
 
 In this section, we apply **Maximum Likelihood Estimation (MLE)** to estimate the part-worth utilities (i.e., β coefficients) in a **Multinomial Logit (MNL)** model. Each β represents the marginal utility of an attribute (e.g., brand, price, ads) and is estimated by maximizing the likelihood of the observed choices made by consumers in the simulated conjoint dataset.
 
----
 
-### 2. Model Structure
+#### Model Structure
 
 The MNL model assumes that each respondent chooses the alternative with the highest utility from a set of 3 options. The utility for respondent \( i \), task \( t \), and alternative \( j \) is modeled as:
 
@@ -314,7 +309,7 @@ U_{ijt} = X_{ijt} \cdot \beta + \varepsilon_{ijt}
 The log-likelihood is computed as the sum of the log probabilities of the chosen alternatives, and we use `scipy.optimize.minimize` with the BFGS algorithm to find the β vector that maximizes it.
 
 
-### 3. Estimation Results
+#### Estimation Results
 
 | Parameter | Estimate | Std. Error | 95% CI Lower | 95% CI Upper |
 |-----------|----------|------------|---------------|---------------|
@@ -339,7 +334,7 @@ The log-likelihood is computed as the sum of the log probabilities of the chosen
   - Interpretation: A consumer would tolerate about a **$7.3 price increase to remove ads**, holding other factors constant (\( 0.73 / 0.10 \)).
 
 
-### 4. Model Fit and Validity
+#### Model Fit and Validity
 
 While we don’t compute formal goodness-of-fit measures here (e.g., log-likelihood at convergence, McFadden’s R²), several signs point to a well-performing model:
 
@@ -348,7 +343,7 @@ While we don’t compute formal goodness-of-fit measures here (e.g., log-likelih
 - The model aligns with **economic theory** and **consumer behavior literature**.
 
 
-### 5. Practical Implications
+#### Practical Implications
 
 This MLE model enables firms to:
 - **Quantify trade-offs** consumers are willing to make (e.g., how much more they’d pay for no ads),
@@ -357,7 +352,7 @@ This MLE model enables firms to:
 - Perform **What-if scenario simulations**: "What happens if we increase Netflix’s price by $2?"
 
 
-### 6. Limitations
+#### Limitations
 
 - **Homogeneous preferences**: The MNL model assumes all consumers share the same β. This masks **preference heterogeneity** and may limit personalization or segmentation.
 - **IID error assumption**: The Gumbel-distributed error terms assume independence across alternatives, which may not hold in nested or correlated choice sets (e.g., two similar streaming services).
@@ -365,7 +360,7 @@ This MLE model enables firms to:
 These limitations can be addressed with a **random coefficients (mixed logit) model**, as discussed in later sections.
 
 
-### Summary
+#### Summary
 
 The MLE estimation has successfully recovered the true structure of simulated consumer preferences:
 
@@ -377,19 +372,6 @@ We now turn to Bayesian methods to compare posterior distributions with these po
 
 
 ## 5. Estimation via Bayesian Methods
-
-_todo: code up a metropolis-hasting MCMC sampler of the posterior distribution. Take 11,000 steps and throw away the first 1,000, retaining the subsequent 10,000._
-
-_hint: Use N(0,5) priors for the betas on the binary variables, and a N(0,1) prior for the price beta._
-
-_hint: instead of calculating post=lik*prior, you can work in the log-space and calculate log-post = log-lik + log-prior (this should enable you to re-use your log-likelihood function from the MLE section just above)_
-
-_hint: King Markov (in the video) use a candidate distribution of a coin flip to decide whether to move left or right among his islands.  Unlike King Markov, we have 4 dimensions (because we have 4 betas) and our dimensions are continuous.  So, use a multivariate normal distribution to pospose the next location for the algorithm to move to. I recommend a MNV(mu, Sigma) where mu=c(0,0,0,0) and sigma has diagonal values c(0.05, 0.05, 0.05, 0.005) and zeros on the off-diagonal.  Since this MVN has no covariances, you can sample each dimension independently (so 4 univariate normals instead of 1 multivariate normal), where the first 3 univariate normals are N(0,0.05) and the last one if N(0,0.005)._
-
-
-_todo: for at least one of the 4 parameters, show the trace plot of the algorithm, as well as the histogram of the posterior distribution._
-
-_todo: report the 4 posterior means, standard deviations, and 95% credible intervals and compare them to your results from the Maximum Likelihood approach._
 
 
 We implement Metropolis-Hastings MCMC to sample from the posterior distribution of the 4 beta coefficients.
@@ -494,90 +476,19 @@ In summary, Bayesian estimation via Metropolis-Hastings successfully recovers th
 
 ## 6. Discussion
 
-_todo: Suppose you did not simulate the data. What do you observe about the parameter estimates? What does $\beta_\text{Netflix} > \beta_\text{Prime}$ mean? Does it make sense that $\beta_\text{price}$ is negative?_
 
-_todo: At a high level, discuss what change you would need to make in order to simulate data from --- and estimate the parameters of --- a multi-level (aka random-parameter or hierarchical) model. This is the model we use to analyze "real world" conjoint data._
+Suppose we had not simulated the data ourselves and instead received this conjoint dataset from a real-world consumer study on streaming service preferences. Based on the results from both Maximum Likelihood Estimation (MLE) and Bayesian MCMC, we observe consistent patterns in the estimated coefficients: Netflix is more preferred than Prime (β_Netflix > β_Prime > 0), advertisements reduce utility (β_Ads < 0), and price sensitivity is negative (β_price < 0).
 
+The finding that β_Netflix is greater than β_Prime suggests that, on average, consumers derive more utility from a streaming service branded as Netflix than from one branded as Amazon Prime, even when ad presence and price are held constant. This highlights that brand identity alone contributes meaningfully to perceived value. Such differences likely stem from factors like content library quality, brand familiarity, and user interface design. The fact that both coefficients are positive but different in magnitude indicates that Prime is valued by consumers, just less so than Netflix. This pattern reflects measurable and quantifiable brand preference in the MNL framework.
 
+The negative coefficient on price is both expected and consistent with rational economic behavior. A negative β_price means that, holding all else equal, higher subscription costs lower a service’s utility, making consumers less likely to choose it. This aligns with foundational assumptions in discrete choice models: consumers prefer lower prices. Likewise, the significantly negative coefficient on Ads (β_Ads) indicates that users prefer ad-free experiences. The more negative this value, the greater the utility loss associated with ads — which also implies that consumers may be willing to pay more to avoid them.
 
+While the MNL model provides useful insights, it assumes that all individuals share the same set of preferences, that is, one global β vector. In reality, this assumption is overly simplistic. Consumers differ widely in their sensitivity to price, their tolerance for ads, and their brand preferences, often influenced by demographics, habits, or prior experiences.
 
-### Interpreting the Parameter Estimates
+To model this heterogeneity, we can extend to a random coefficients logit model, also known as a mixed logit or hierarchical Bayes model. In this framework, each respondent \( i \) has their own vector of coefficients \( \beta_i \), which is assumed to be drawn from a population distribution \( \beta_i \sim \mathcal{N}(\mu, \Sigma) \). Here, \( \mu \) captures the average preference across the population, and \( \Sigma \) captures the variance and potential correlations in preferences across individuals.
 
-Let us assume that we did **not simulate** the data ourselves and instead received this conjoint dataset from a real-world consumer study on streaming service preferences.
+Simulating from such a model would involve first drawing a unique β vector for each respondent and then simulating their choices based on their personalized utility function. This introduces variation that mirrors real consumer behavior more closely. Estimating this model can be done using Bayesian MCMC techniques, where both the individual-level betas and population-level parameters are inferred simultaneously, or through empirical Bayes or maximum simulated likelihood methods, which integrate over the assumed population distribution.
 
-From both the **Maximum Likelihood Estimation** and **Bayesian MCMC results**, we observe the following pattern in the estimated coefficients:
+The benefit of this hierarchical approach is that it supports more granular analyses. It enables personalized predictions, such as forecasting what a specific user would choose given their estimated β. It also enables more accurate market segmentation, where users with similar preferences can be grouped and targeted effectively. Finally, it improves policy simulation and pricing strategy, providing a more nuanced understanding of willingness-to-pay across different segments of the population.
 
-- **β_Netflix > β_Prime > 0**
-- **β_Ads < 0**
-- **β_price < 0**
-
-#### What does β_Netflix > β_Prime mean?
-
-This tells us that, on average, consumers in this sample derive more utility from a streaming service branded as **Netflix** than from one branded **Amazon Prime**, holding ad presence and price constant. In other words, **brand identity alone has a measurable impact** on perceived value — likely due to factors such as:
-
-- Content library perception,
-- Brand familiarity or trust,
-- User interface experience.
-
-The fact that **β_Prime > 0** but less than **β_Netflix** suggests that Prime is also positively valued, but to a lesser degree.
-
-Importantly, this result implies **brand preference exists even when controlling for other features**, and it can be quantified using part-worth utilities in the MNL framework.
-
-#### Does it make sense that β_price is negative?
-
-Yes — this is consistent with standard economic theory and rational consumer behavior. A **negative price coefficient** indicates that higher monthly subscription costs reduce utility, making a consumer less likely to choose that option. This is a foundational assumption in discrete choice models: **all else equal, consumers prefer lower prices**.
-
-Similarly, a **negative coefficient on Ads (β_Ads)** supports the intuitive notion that users would prefer an ad-free experience. The more negative this value is, the more consumers are willing to pay to avoid ads.
-
-
-
-### Extending to Hierarchical (Multi-Level) Models
-
-The multinomial logit (MNL) model we've estimated so far assumes that **all individuals share the same set of preferences** — i.e., a single global β vector. However, in real-world applications, this is often too simplistic because:
-
-- People differ in their sensitivity to price,
-- Some care more about ads than others,
-- Brand preference can vary widely by demographics or prior experience.
-
-#### The Solution: A Random Coefficients Logit Model (aka Mixed Logit or Hierarchical Bayes Model)
-
-To account for this **preference heterogeneity**, we can extend the model by allowing each individual \( i \) to have their own coefficient vector \( \beta_i \), drawn from a population-level distribution:
-
-\[
-\beta_i \sim \mathcal{N}(\mu, \Sigma)
-\]
-
-Here:
-- \( \mu \) is the **mean preference vector** across the population,
-- \( \Sigma \) is the **covariance matrix**, capturing variation and correlation in preferences.
-
-#### To Simulate from This Model
-
-1. **Simulate individual-level betas**:
-   - Draw \( \beta_i \) from \( \mathcal{N}(\mu, \Sigma) \) for each respondent.
-2. **Simulate choices using \( \beta_i \)**:
-   - Use each respondent’s own \( \beta_i \) to simulate their choices across tasks.
-   - This introduces realistic variation in responses.
-
-#### To Estimate the Model
-
-- **Bayesian estimation via MCMC (e.g., Gibbs sampling or Hamiltonian Monte Carlo)**:
-  - This allows inference of both \( \mu, \Sigma \) and the individual \( \beta_i \) values simultaneously.
-- **Empirical Bayes / Maximum Simulated Likelihood**:
-  - Use simulated MLE to integrate over the distribution of random coefficients.
-
-#### Why It Matters
-
-- **Individual-level predictions**: You can better personalize recommendations or offers.
-- **Market segmentation**: Clustering on \( \beta_i \) helps identify consumer groups.
-- **Policy simulation**: More accurate estimates of price sensitivity and willingness-to-pay.
-
----
-
-In summary, while the basic MNL model offers useful population-level insights, a **hierarchical model reflects the diversity of preferences in real markets**, making it the gold standard for analyzing "real-world" conjoint data.
-
-
-
-
-
-
+In summary, while the basic MNL model delivers valuable population-level insights, extending it to a hierarchical form allows us to better reflect and leverage the diversity in real-world preferences. This makes it a more realistic and powerful tool for analyzing conjoint data in practice.
